@@ -1,3 +1,6 @@
+![Uygulama ekran görüntüsü](public/images/chatfoto.png)
+
+
 # 📌 Q&A Chat Project
 
 ChatGPT benzeri soru-cevap uygulaması.  
@@ -21,8 +24,9 @@ Sohbet geçmişi saklanabilir, yeni sohbet açılabilir, konuşmalar yeniden adl
 
 1. **Repoyu klonla**
    ```bash
-   git clone https://github.com/<kullanici-adi>/qna-chat-project.git
-   cd qna-chat-project
+git clone https://github.com/beyzasuner/project-chat-qna.git
+cd project-chat-qna
+
 
 
 2. **Bağımlıkları yükle**
