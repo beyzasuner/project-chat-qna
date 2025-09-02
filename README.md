@@ -1,4 +1,6 @@
-![Uygulama ekran görüntüsü](public/images/chatfoto.png)
+![Uygulama light mode ekran görüntüsü](public/images/light.png)
+![Uygulama dark mode ekran görüntüsü](public/images/dark.png)
+![Ayarlar](public/images/settings.png)
 
 
 # 📌 Q&A Chat Project
@@ -48,9 +50,35 @@ Tarayıcıda http://localhost:3000
  ---
 
  
-**📖 Özellikler**
--Kullanıcı ve asistan mesajları farklı baloncuklarda gösterilir.
--Enter tuşu ile mesaj gönderme, Shift+Enter ile yeni satır açma.
--Yeni sohbet başlatma.
--Sohbetleri yeniden adlandırma ve silme.
--Sohbet geçmişi localStorage’da saklanır.
+## 📖 Özellikler
+
+- 💬 **Mesajlaşma Arayüzü**
+  - Kullanıcı ve asistan mesajları farklı baloncuklarda (renk ve hizalama) gösterilir.
+  - Markdown desteği sayesinde kod blokları ve formatlı metinler sorunsuz görüntülenir.
+  - Uzun metinlerde otomatik kaydırma ve responsive yapı desteklenir.
+
+- ⌨️ **Mesaj Gönderme**
+  - `Enter` tuşu → mesaj gönderir.
+  - `Shift + Enter` → yeni satır açar.
+  - `Ctrl/Cmd + Enter` → alternatif gönderme kısayolu.
+
+- 🆕 **Sohbet Yönetimi**
+  - Yeni sohbet başlatılabilir.
+  - Mevcut sohbetler yeniden adlandırılabilir.
+  - Gereksiz sohbetler silinebilir.
+  - Aktif sohbetler arasında hızlı geçiş yapılabilir.
+
+- 💾 **Veri Saklama**
+  - Sohbet geçmişi **tarayıcı localStorage** üzerinde saklanır.
+  - Sayfa yenilense bile konuşmalar korunur.
+
+- 🎨 **Tema ve Görsellik**
+  - Dark/Light tema desteği.
+  - Mobil ve masaüstü için **responsive tasarım**.
+  - Kullanıcı dostu butonlar, sade ve modern arayüz.
+
+- ⚡ **Diğer Fonksiyonellikler**
+  - API’den yanıt beklerken “Yazıyor...” yükleniyor göstergesi.
+  - Ayarlar menüsünden kullanılacak **OpenAI modeli** seçilebilir.
+  - Otomatik textarea boyutlandırma: yazdıkça büyür, belli bir sınırdan sonra kaydırma çıkar.
+

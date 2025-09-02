@@ -14,12 +14,21 @@ export function Composer({
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const composingRef = useRef(false); // IME (örn. Türkçe öneri çubuğu) aktif mi?
 
+  // Yazdıkça otomatik boyutlandır (max 200px)
+  const autoResize = (el: HTMLTextAreaElement) => {
+    const max = 200; // px
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, max) + "px";
+  };
+
   // Mesaj gönder
   const sendMessage = () => {
     if (disabled) return;
     const text = (inputRef.current?.value ?? "").trim();
     if (!text) return;
+
     onSend(text);
+
     if (inputRef.current) {
       inputRef.current.value = "";
       autoResize(inputRef.current);
@@ -29,7 +38,7 @@ export function Composer({
 
   // Enter → gönder, Shift+Enter → satır, Ctrl/Cmd+Enter → gönder
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (composingRef.current) return; // IME açıkken engelleme
+    if (composingRef.current) return; // IME açıkken Enter'ı engelleme
     const isCmdOrCtrl = e.metaKey || e.ctrlKey;
 
     if ((e.key === "Enter" && !e.shiftKey) || (e.key === "Enter" && isCmdOrCtrl)) {
@@ -38,19 +47,12 @@ export function Composer({
     }
   };
 
-  // IME başlangıç/bitiş
-  const onCompositionStart = () => (composingRef.current = true);
-  const onCompositionEnd = () => (composingRef.current = false);
-
-  // Yazdıkça otomatik boyutlandır
-  const autoResize = (el: HTMLTextAreaElement) => {
-    const max = 200; // px cinsinden maksimum yükseklik
-    el.style.height = "auto";
-    el.style.height = Math.min(el.scrollHeight, max) + "px";
+  // IME event'leri (kullandığımız için uyarı yok)
+  const onCompositionStart = () => {
+    composingRef.current = true;
   };
-
-  const onInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    autoResize(e.currentTarget);
+  const onCompositionEnd = () => {
+    composingRef.current = false;
   };
 
   useEffect(() => {
@@ -61,22 +63,20 @@ export function Composer({
   }, [disabled]);
 
   return (
-    <div className="border-t p-4 flex gap-2">
+    <div className="border-t p-3 flex gap-2 items-end">
       <Textarea
         ref={inputRef}
         placeholder="Mesajınızı yazın…"
-        className="resize-none"
+        aria-label="Mesaj alanı"
+        rows={1}
         onKeyDown={onKeyDown}
+        onInput={(e) => autoResize(e.currentTarget)}
         onCompositionStart={onCompositionStart}
         onCompositionEnd={onCompositionEnd}
-        onInput={onInput}
-        spellCheck
         autoFocus
-        aria-label="Sohbet mesajı"
-        disabled={!!disabled}
-        rows={1}
+        className="resize-none min-h-[40px] max-h-40 overflow-y-auto"
       />
-      <Button type="button" onClick={sendMessage} disabled={!!disabled} aria-label="Mesajı gönder">
+      <Button onClick={sendMessage} disabled={!!disabled}>
         Gönder
       </Button>
     </div>

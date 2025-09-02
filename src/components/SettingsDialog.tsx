@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { loadSettings, saveSettings, type Settings } from "@/lib/settings";
@@ -33,6 +34,9 @@ export function SettingsDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Ayarlar</DialogTitle>
+          <DialogDescription>
+            Buradan model ayarlarını değiştirebilirsiniz.
+          </DialogDescription>
         </DialogHeader>
 
         <form
@@ -47,7 +51,6 @@ export function SettingsDialog({
               Model
             </label>
 
-            {/* select yerine input kullanmak istersen kolayca değiştirebilirsin */}
             <select
               id="model"
               value={s.model}
@@ -61,10 +64,7 @@ export function SettingsDialog({
               <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
             </select>
 
-            <p
-              id="model-help"
-              className="text-xs text-muted-foreground"
-            >
+            <p id="model-help" className="text-xs text-muted-foreground">
               Yanıtlar OpenAI üzerinden alınır. Sunucuda{" "}
               <code>OPENAI_API_KEY</code> tanımlı olmalı.
             </p>

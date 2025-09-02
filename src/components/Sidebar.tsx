@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { ModeToggle } from "@/components/ModeToggle"; // ← eklendi
 
 type ConversationLite = { id: string; title: string };
 
@@ -24,21 +25,28 @@ export function Sidebar({
 }) {
   return (
     <aside className="h-full w-[18rem] border-r bg-background flex flex-col">
+      {/* Üst başlık */}
       <div className="p-3 flex items-center justify-between border-b">
         <h1 className="text-lg font-semibold">Q&A Chat</h1>
         <p className="text-xs text-muted-foreground">ChatGPT benzeri</p>
       </div>
 
+      {/* Yeni sohbet butonu */}
       <div className="px-3 pb-3">
-        <Button className="w-full" onClick={onNew}>Yeni sohbet</Button>
+        <Button className="w-full" onClick={onNew}>
+          Yeni sohbet
+        </Button>
       </div>
 
       <Separator />
 
+      {/* Konuşmalar listesi */}
       <ScrollArea className="h-full">
         <nav aria-label="Konuşmalar" className="py-2">
           {conversations.length === 0 && (
-            <div className="text-sm text-muted-foreground px-3">Henüz konuşma yok.</div>
+            <div className="text-sm text-muted-foreground px-3">
+              Henüz konuşma yok.
+            </div>
           )}
 
           <ul className="space-y-1 px-2">
@@ -46,7 +54,6 @@ export function Sidebar({
               const isActive = activeId === c.id;
               return (
                 <li key={c.id}>
-                  {/* Dış kapsayıcı tıklanabilir alan */}
                   <div
                     role="button"
                     tabIndex={0}
@@ -64,19 +71,18 @@ export function Sidebar({
                       isActive ? "bg-muted" : "hover:bg-muted",
                     ].join(" ")}
                   >
-                    {/* GRID: [başlık 1fr] [aksiyonlar auto] */}
+                    {/* Grid: başlık 1fr, aksiyonlar auto → metinler her zaman görünür */}
                     <div className="grid grid-cols-[1fr_auto] items-center gap-2 min-w-0 pr-1">
-                      {/* Başlık: esneyen, kısalabilir */}
-                      <span className="min-w-0 truncate text-left">
-                        {c.title}
-                      </span>
+                      <span className="min-w-0 truncate text-left">{c.title}</span>
 
-                      {/* Aksiyonlar: sabit genişlik, sarmalanmaz ve her zaman görünür */}
                       <div className="shrink-0 whitespace-nowrap flex items-center gap-3">
                         <button
                           type="button"
                           className="text-xs text-muted-foreground hover:underline"
-                          onClick={(e) => { e.stopPropagation(); onRename(c.id); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onRename(c.id);
+                          }}
                           aria-label="Konuşmayı yeniden adlandır"
                         >
                           Yeniden adlandır
@@ -84,7 +90,10 @@ export function Sidebar({
                         <button
                           type="button"
                           className="text-xs text-destructive hover:underline"
-                          onClick={(e) => { e.stopPropagation(); onDelete(c.id); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onDelete(c.id);
+                          }}
                           aria-label="Konuşmayı sil"
                         >
                           Sil
@@ -101,10 +110,19 @@ export function Sidebar({
 
       <Separator />
 
-      <div className="p-3">
-        <Button variant="outline" className="w-full" onClick={onOpenSettings}>
+      {/* Alt bar: Ayarlar + Tema (masaüstünde tema düğmesi burada) */}
+      <div className="p-3 flex items-center justify-between gap-2">
+        <Button
+          variant="outline"
+          className="flex-1"
+          onClick={onOpenSettings}
+          type="button"
+        >
           Ayarlar
         </Button>
+
+        {/* Tema butonu: masaüstünde her zaman görünür */}
+        <ModeToggle />
       </div>
     </aside>
   );
